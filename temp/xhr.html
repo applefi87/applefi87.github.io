@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+      const xhr = new XMLHttpRequest()
+      xhr.open('post', 'https://jsonplaceholder.typicode.com/posts')
+      xhr.setRequestHeader('Content-Type','application/json')
+    xhr.send(JSON.stringify({
+    "title": "aaa",
+    "body": "bbb",
+    "userId": 1,
+    "id": 101
+}))
+    xhr.onload = () => {
+      const json = JSON.parse(xhr.responseText)
+      console.log(json)
+    }
+    xhr.onerror = (error) => {
+      console.log(error)
+    }
+   
+  </script>
+</body>
+</html>

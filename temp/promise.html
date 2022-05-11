@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const pass = comfirm('OK?')
+    // const WGM =new Promise((rs,rj)=>{
+    //   if (pass){
+    //     rs('Congrats')
+    //   }else{
+    //     rj(new Error('QQ'))
+    //   }
+    // })
+    // WGM.then(out=>{
+    //   console.log(out);
+    // }).catch(melon=>{
+    //   console.log(melon);
+    // })
+
+    const pass = confirm('你通過考試了嗎')
+    const willGetMoney = (pass) => {
+      return new Promise((rs, rj) => {
+        if (pass) { rs(new Error('QQ')) } else {
+          rj('QQ')
+        }
+      })
+    }
+    willGetMoney(pass).then(
+      re => {
+        console.log(re)
+      }).catch(
+        err => {
+          console.log(err)
+        })
+
+  </script>
+</body>
+
+</html>

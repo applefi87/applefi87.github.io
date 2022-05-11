@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 釐清try catch 跟 promise 之間的訊息傳遞(如何判斷失敗)
+ const wait1 = (ms, ok) => {
+      return new Promise((rs, rj) => {
+        setTimeout(() => {
+          // 故意new Error 看 try catch 是否跳到catch
+          if (ok) rs(new Error('wait1 OK!，過了' + ms + '毫秒'))
+          else rj(new Error('wait1錯誤，過了' + ms + '毫秒'))
+        }, ms)
+      })
+    }
+    const wait2 = (ms, ok) => {
+      return new Promise((rs, rj) => {
+        setTimeout(() => {
+          if (ok) rs("ok")
+          else rj(new Error('wait2錯誤，過了' + ms + '毫秒'))
+        }, ms)
+      })
+    }
+    const nwait = (ms, ok) => {
+      return new Promise((rs, rj) => {
+          if (ok) rs("ok")
+          else rj(new Error('nw錯誤'))
+      })
+    }
+   
+    const asyncFunc = async () => {
+      try {
+        const result1 = await wait1(2000, true)
+        console.log("這是正常console.log:result1:"+result1)
+        const result2 = await wait2(3000, false)
+// 到這接收到 promise 的reject訊號 ，中斷到catch
+        console.log("這是console.log:result2:"+result2)
+      } catch (error) {
+        console.log("這是catch 顯示的:"+error)
+      }
+    }
+
+    asyncFunc()
+
+  </script>
+</body>
+</html>

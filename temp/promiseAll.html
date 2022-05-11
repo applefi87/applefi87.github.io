@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const wait = (ms, ok) => {
+      return new Promise((rs, rj) => {
+        setTimeout(() => {
+          // 故意new Error 看 try catch 是否跳到catch
+          if (ok) { rs(ms) }
+          else {
+            rj(new Error('wait1錯誤，過了' + ms + '毫秒'))
+          }
+        }, ms)
+      })
+    }
+    const func2 = async () => {
+      try {
+        let x = await Promise.all([wait(1500, true), wait(2500, true)]).reduce((a,b)=>a+b);
+          console.log(x);
+      } catch (er) {
+        console.log(er);
+      }
+    }
+    func2()
+  </script>
+</body>
+
+</html>

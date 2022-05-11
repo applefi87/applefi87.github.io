@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <table></table>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js'></script>
+
+  <script>
+    axios.get('https://kktix.com/events.json')
+      .then(({ data }) => {
+        let list = data['entry']
+        let cont = Object.keys(list[1])
+        console.log(cont);
+        for (let i in list) {
+          let x = ""
+          for (let n in cont) {
+            let text = list[i][cont[n]]
+            
+            if(typeof text == object){
+              let ob = list[i][cont[n]]
+              for(let m in ob){
+                x = x + `<td>${Object.key(ob)} </td>`
+              }
+            }else{
+              x = x + `<td>${text} </td>`
+            }
+          }
+          $('table').append(`<tr>${x}</tr>`)
+        }
+      })
+      .catch((error) => { console.error("出錯搂!"+error) })
+    .finally(() => {console.log("ok");})
+
+
+    // const object = { a: 1, b: 2, c: 3, d: 4 };
+    // const { a, b: b2,d, ...others } = object;
+    // console.log(a); // 1
+    // console.log(b2); // 2，將 b 重新命名為 newValue
+    // console.log(others); // {c: 3, d: 4}
+  </script>
+</body>
+
+</html>
